@@ -1,5 +1,8 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import ready from "./listeners/ready";
+import dotenv from "dotenv";
+
+dotenv.config({ path:"./.env" })
 
 console.log("UselessBot is starting...");
 
