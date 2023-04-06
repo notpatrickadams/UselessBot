@@ -1,8 +1,9 @@
 import { Colors, CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { client, userIdExp } from "../constants";
 
 const rate = new SlashCommandBuilder()
     .setName("rate")
-    .setDescription("The bot will rate whatever you ask it to")
+    .setDescription("The bot will randomly rate whatever you ask it to")
     .addStringOption(option => 
         option
             .setName("thing")
@@ -19,8 +20,17 @@ export default {
             "🌟", "🌟🌟", "🌟🌟🌟", "🌟🌟🌟🌟", "🌟🌟🌟🌟🌟",
             "🌠", "🌠🌠", "🌠🌠🌠", "🌠🌠🌠🌠", "🌠🌠🌠🌠🌠"
         ];
+        let thing = interaction.options.get("thing")?.value?.toString()!;
+        let expRes = userIdExp.exec(thing);
+        // Try to find user ID
+        if (expRes !== null) {
+            let mentionedUser = client.guilds.resolve(interaction.guild!).members.resolve(expRes[0].replace("<", "").replace("@", "").replace(">", ""));
+            let replacement = mentionedUser?.nickname ?? mentionedUser?.user.username;
+            thing = thing.replace(expRes[0], replacement!);
+        }
+
         let embed = new EmbedBuilder()
-            .setTitle(interaction.options.get("thing")?.value?.toString()!)
+            .setTitle(thing)
             .setDescription(stars[Math.floor(Math.random() * stars.length)])
             .setColor(Colors.Yellow)
             .toJSON()

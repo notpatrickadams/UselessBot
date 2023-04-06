@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import ready from "./listeners/ready";
 import dotenv from "dotenv";
+import { client } from "./constants";
 
 dotenv.config({ path:"./.env" })
 
@@ -12,17 +13,6 @@ if (TOKEN === undefined) {
     console.log("You have not set the DISCORD_TOKEN environment variable");
     process.exit(0);
 }
-
-const client = new Client({
-    intents: [ 
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.DirectMessageReactions
-    ]
-});
 
 ready(client);
 
