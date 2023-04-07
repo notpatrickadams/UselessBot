@@ -1,7 +1,7 @@
 import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { PokemonClient, Pokemon } from "pokenode-ts";
 import { Chance } from "chance";
-import { capitalizeFirstLetter } from "../constants";
+import { capitalizeFirstLetter, logger } from "../constants";
 
 const chance = new Chance();
 
@@ -55,6 +55,8 @@ async function getPokemonEmbed() {
             pokemonName = pokemonName + " ✨"
         }
 
+        logger.info(`Generated ${ pokemonName }: ${ pokemonImage }`);
+
         return new EmbedBuilder()
             .setTitle(pokemonName)
             .setImage(pokemonImage!)
@@ -63,6 +65,7 @@ async function getPokemonEmbed() {
                 { name: "Types", value: typeString }
             )
     } 
+    logger.error("Undefined random Pokemon. Ash's dad was sent");
     throw new Error("random Pokemon is undefined");
 }
 
@@ -74,6 +77,7 @@ export default {
             await interaction.reply({ embeds: [embed] })
             return;
         } catch (e) {
+            logger.error(e);
             await interaction.reply({ embeds: [defaultEmbed.toJSON()] });
         }
     }

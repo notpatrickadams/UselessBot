@@ -5,6 +5,7 @@ import rate from "../commands/rate";
 import urbanDictionary from "../commands/urbanDictionary";
 import bee from "../commands/bee";
 import pokemon from "../commands/pokemon";
+import { logger } from "../constants";
 
 export default (client: Client): void => {
     client.on("ready", async () => {
@@ -21,14 +22,16 @@ export default (client: Client): void => {
             pokemon.data
         ].forEach(async (commandData) => {
             await client.application?.commands.create(commandData);
-            console.log(`Creating slash command: /${ commandData.name }`);
+            logger.info(`Creating slash command: /${ commandData.name }`);
         });
-        console.log(`${client.user.username} is online`);
+        logger.info(`${client.user.username} is online`);
     });
 
     client.on("interactionCreate", async (interaction) => {
         if (!interaction.isCommand()) return;
         const { commandName } = interaction;
+        const user = interaction.user;
+        logger.info(`${ user.username }#${ user.discriminator } (${ user.id }) invoked /${ commandName }`);
         switch (commandName) {
             case "magic7":
                 magicSeven.execute(interaction);
