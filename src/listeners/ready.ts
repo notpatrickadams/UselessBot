@@ -4,6 +4,7 @@ import hi from "../commands/hi";
 import rate from "../commands/rate";
 import urbanDictionary from "../commands/urbanDictionary";
 import bee from "../commands/bee";
+import pokemon from "../commands/pokemon";
 
 export default (client: Client): void => {
     client.on("ready", async () => {
@@ -16,7 +17,8 @@ export default (client: Client): void => {
             hi.data,
             rate.data,
             urbanDictionary.data,
-            bee.data
+            bee.data,
+            pokemon.data
         ].forEach(async (commandData) => {
             await client.application?.commands.create(commandData);
             console.log(`Creating slash command: /${ commandData.name }`);
@@ -42,6 +44,9 @@ export default (client: Client): void => {
                 break;
             case "bee":
                 bee.execute(interaction);
+                break;
+            case "pokemon":
+                pokemon.execute(interaction);
                 break;
         }
     });
