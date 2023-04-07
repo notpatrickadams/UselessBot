@@ -10,8 +10,16 @@ const pokemon = new SlashCommandBuilder()
     .setDescription("Gives you a random Pokemon")
 ;
 
+const defaultEmbed = new EmbedBuilder()
+    .setTitle("Ash's Dad")
+    .setImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/122.png")
+    .addFields(
+        { name: "Type", value: "Normal" }
+    )
+;
+
 async function getRandomPokemon(api: PokemonClient): Promise<Pokemon | undefined> {
-    const pkmnList = await (await api.listPokemonSpecies(0, 10000)).results;
+    const pkmnList = await (await api.listPokemonSpecies(0, 905)).results;
     let randomPokemon = await api.getPokemonByName(pkmnList[Math.floor(Math.random() * pkmnList.length)].name);
     const sprites = randomPokemon.sprites;
     if (sprites.other === undefined) {
@@ -25,9 +33,9 @@ async function getPokemonEmbed() {
     const api = new PokemonClient();
     let randomPokemon = await getRandomPokemon(api);
     if (randomPokemon !== undefined) {
-        let pokemonImage = chance.weighted([randomPokemon.sprites.other?.home.front_default, randomPokemon.sprites.other?.home.front_shiny], [19/20, 1/20]);
+        let pokemonImage = chance.weighted([randomPokemon.sprites.front_default, randomPokemon.sprites.front_shiny], [19/20, 1/20]);
         let pokemonSpecies = api.getPokemonSpeciesByName(randomPokemon.species.name);
-        let engText = "";
+        let engText = null;
         let types: string[] = [];
 
         randomPokemon.types.forEach((pkmnType) => {
@@ -56,7 +64,12 @@ async function getPokemonEmbed() {
 export default {
     data: pokemon,
     async execute(interaction: CommandInteraction) {
-        let embed = (await getPokemonEmbed()).toJSON();
-        await interaction.reply({ embeds: [embed] })
+        try {
+            let embed = (await getPokemonEmbed()).toJSON();
+            await interaction.reply({ embeds: [embed] })
+            return;
+        } catch (e) {
+            await interaction.reply({ embeds: [defaultEmbed.toJSON()] });
+        }
     }
 }
