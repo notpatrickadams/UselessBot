@@ -33,6 +33,7 @@ async function getPokemonEmbed() {
     const api = new PokemonClient();
     let randomPokemon = await getRandomPokemon(api);
     if (randomPokemon !== undefined) {
+        let pokemonName = capitalizeFirstLetter(randomPokemon.name);
         let pokemonImage = chance.weighted([randomPokemon.sprites.front_default, randomPokemon.sprites.front_shiny], [19/20, 1/20]);
         let pokemonSpecies = api.getPokemonSpeciesByName(randomPokemon.species.name);
         let engText = null;
@@ -50,8 +51,12 @@ async function getPokemonEmbed() {
             }
         }
 
+        if (pokemonImage === randomPokemon.sprites.front_shiny) {
+            pokemonName = pokemonName + " ✨"
+        }
+
         return new EmbedBuilder()
-            .setTitle(capitalizeFirstLetter(randomPokemon.name))
+            .setTitle(pokemonName)
             .setImage(pokemonImage!)
             .setDescription(engText)
             .addFields(
