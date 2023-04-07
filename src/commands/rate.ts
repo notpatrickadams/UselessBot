@@ -1,5 +1,5 @@
 import { Colors, CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { client, userIdExp } from "../constants";
+import { client, logger, userIdExp } from "../constants";
 
 const rate = new SlashCommandBuilder()
     .setName("rate")
@@ -29,9 +29,13 @@ export default {
             thing = thing.replace(expRes[0], replacement!);
         }
 
+        let starsSent = stars[Math.floor(Math.random() * stars.length)];
+
+        logger.info(`Rating ${ thing } ${ starsSent } stars`);
+
         let embed = new EmbedBuilder()
             .setTitle(thing)
-            .setDescription(stars[Math.floor(Math.random() * stars.length)])
+            .setDescription(starsSent)
             .setColor(Colors.Yellow)
             .toJSON()
         await interaction.reply({ embeds: [embed] });
