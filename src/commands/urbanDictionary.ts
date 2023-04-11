@@ -8,8 +8,7 @@ const urbanDictionary = new SlashCommandBuilder()
             .setName("term")
             .setDescription("The term you want to search on UrbanDictionary")
             .setRequired(true)
-    )
-;
+    );
 
 export default {
     data: urbanDictionary,

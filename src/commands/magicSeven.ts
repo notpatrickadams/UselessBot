@@ -9,8 +9,7 @@ const magicSeven = new SlashCommandBuilder()
             .setName("inquiry")
             .setDescription("What you want to ask the Magic 7 ball")
             .setRequired(true)
-    )
-;
+    );
 
 export default {
     data: magicSeven,

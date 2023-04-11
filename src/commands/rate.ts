@@ -9,8 +9,7 @@ const rate = new SlashCommandBuilder()
             .setName("thing")
             .setDescription("The thing you want the bot to rate")
             .setRequired(true)
-    )
-;
+    );
 
 export default {
     data: rate,

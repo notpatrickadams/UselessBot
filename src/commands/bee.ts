@@ -3,8 +3,7 @@ import Jimp from "jimp";
 
 const bee = new SlashCommandBuilder()
     .setName("bee")
-    .setDescription("Creates a randomly colored bee")
-;
+    .setDescription("Creates a randomly colored bee");
 
 function randomRGBA() {
     return Jimp.rgbaToInt(
@@ -42,7 +41,7 @@ export default {
             bee.getBuffer(Jimp.MIME_PNG, (err, val) => {
                 const attachment: AttachmentBuilder = new AttachmentBuilder(val).setName("bee.png");
                 interaction.reply({ embeds: [new EmbedBuilder().setTitle("Here's your bee!").setImage("attachment://bee.png")], files: [attachment] });
-            })
+            });
         })
     }
 }

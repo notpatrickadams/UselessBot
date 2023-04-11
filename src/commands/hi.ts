@@ -2,8 +2,7 @@ import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 
 const hi = new SlashCommandBuilder()
     .setName("hi")
-    .setDescription("The bot says hi to you")
-;
+    .setDescription("The bot says hi to you");
 
 export default {
     data: hi,
