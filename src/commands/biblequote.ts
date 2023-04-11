@@ -5,8 +5,7 @@ const chance = new Chance();
 
 const bibleQuote = new SlashCommandBuilder()
     .setName("biblequote")
-    .setDescription("Randomly quotes someone from the bible")
-;
+    .setDescription("Randomly quotes someone from the bible");
 
 function generateBibleSection() {
     const namesArr = ["Matthew", "Mark", "Luke", "John", "Acts", "Romans", "Revelation"];
@@ -36,8 +35,7 @@ export default {
                 .setTitle(generateBibleSection())
                 .setDescription(quote)
                 .setImage(generateRealisticGodImage())
-                .toJSON()
-            ;
+                .toJSON();
             await interaction.reply({ embeds: [embed] });
         } else {
             await interaction.reply({ content: "Can't read the bible right now", ephemeral: true });

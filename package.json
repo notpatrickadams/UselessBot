@@ -7,6 +7,7 @@
     "discord.js": "^14.8.0",
     "dotenv": "^16.0.3",
     "jimp": "^0.22.7",
+    "nodemon": "^2.0.22",
     "pokenode-ts": "^1.18.3",
     "rotating-file-stream": "^3.1.0",
     "sharp": "^0.32.0",

@@ -7,16 +7,14 @@ const chance = new Chance();
 
 const pokemon = new SlashCommandBuilder()
     .setName("pokemon")
-    .setDescription("Gives you a random Pokemon")
-;
+    .setDescription("Gives you a random Pokemon");
 
 const defaultEmbed = new EmbedBuilder()
     .setTitle("Ash's Dad")
     .setImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/122.png")
     .addFields(
         { name: "Type", value: "Normal" }
-    )
-;
+    );
 
 async function getRandomPokemon(api: PokemonClient): Promise<Pokemon | undefined> {
     const pkmnList = await (await api.listPokemonSpecies(0, 905)).results;
@@ -41,7 +39,7 @@ async function getPokemonEmbed() {
 
         randomPokemon.types.forEach((pkmnType) => {
             types.push(capitalizeFirstLetter(pkmnType.type.name));
-        })
+        });
 
         let typeString = types.join(" / ");
 
@@ -63,7 +61,7 @@ async function getPokemonEmbed() {
             .setDescription(engText)
             .addFields(
                 { name: "Types", value: typeString }
-            )
+            );
     } 
     logger.error("Undefined random Pokemon. Ash's dad was sent");
     throw new Error("random Pokemon is undefined");
