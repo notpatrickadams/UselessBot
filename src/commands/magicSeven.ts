@@ -1,5 +1,4 @@
-import { EmbedBuilder } from "@discordjs/builders";
-import { APIEmbed, CommandInteraction, CommandInteractionOptionResolver, Embed, SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, SlashCommandBuilder, EmbedBuilder } from "discord.js";
 
 const magicSeven = new SlashCommandBuilder()
     .setName("magic7")
