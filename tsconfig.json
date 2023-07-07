@@ -19,7 +19,10 @@
         ],
         "sourceMap": false,
         "baseUrl": "./",
-        "inlineSourceMap": true
+        "inlineSourceMap": true,
+        "paths": {
+            "src": ["./src/"]
+        }
     },
     "files": [
         "src/Bot.ts"

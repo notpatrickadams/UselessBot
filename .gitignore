@@ -6,3 +6,4 @@
 *.lock
 *.lockb
 *.log
+.eslintrc.json
