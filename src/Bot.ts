@@ -15,12 +15,26 @@ if (TOKEN === undefined) {
 }
 
 function ready(client: Client): void {
+    client.on("ready", async (client) => {
+        const guildList = client.guilds.cache.map(guild => guild.id);
+        logger.info(client.user.username + " is running in these Guilds: " + guildList.join(", "));
+    });
+
     client.on("interactionCreate", async (interaction) => {
         if (!interaction.isCommand()) return;
-        const { commandName } = interaction;
-        const user = interaction.user;
         
-        logger.info(`${ user.username }${user.discriminator === "0" ? "" : "#" + user.discriminator } (${ user.id }) invoked /${ commandName }`);
+        const { commandName, guild } = interaction;
+        const user = interaction.user;
+        let serverId;
+
+        if (guild !== null) {
+            serverId = guild.id;
+        } else {
+            serverId = "None";
+        }    
+        
+        // catch invalid token
+        logger.info(`${ user.username }${user.discriminator === "0" ? "" : "#" + user.discriminator } (${ user.id }) invoked /${ commandName } in Guild: ${ serverId }`);
         switch (commandName) {
         case "magic7":
             magicSeven.execute(interaction);
@@ -63,4 +77,10 @@ function ready(client: Client): void {
 
 ready(client);
 
-client.login(TOKEN);
+client.login(TOKEN).catch((err) => {
+    if (err.code === "TokenInvalid") {
+        logger.error("An invalid token was provided.");
+    } else {
+        logger.error(err);
+    }
+} );
