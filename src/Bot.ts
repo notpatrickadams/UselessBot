@@ -33,7 +33,6 @@ function ready(client: Client): void {
             serverId = "None";
         }    
         
-        // catch invalid token
         logger.info(`${ user.username }${user.discriminator === "0" ? "" : "#" + user.discriminator } (${ user.id }) invoked /${ commandName } in Guild: ${ serverId }`);
         switch (commandName) {
         case "magic7":

@@ -73,7 +73,7 @@ export const execute = async (interaction: CommandInteraction) => {
         await interaction.reply({ embeds: [embed] });
         return;
     } catch (e) {
-        logger.error(e);
+        logger.error((e as Error).message);
         await interaction.reply({ embeds: [defaultEmbed.toJSON()] });
     }
 };
