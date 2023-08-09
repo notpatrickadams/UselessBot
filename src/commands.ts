@@ -6,3 +6,4 @@ export * as bee from "./commands/bee";
 export * as pokemon from "./commands/pokemon";
 export * as about from "./commands/about";
 export * as butterfree from "./commands/byebutterfree";
+export * as where from "./commands/where";

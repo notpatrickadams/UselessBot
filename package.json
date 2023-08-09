@@ -26,6 +26,7 @@
   },
   "scripts": {
     "start": "ts-node src/Bot.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/Bot.ts",
     "register": "ts-node ./register.ts"
   }
 }
