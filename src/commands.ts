@@ -7,3 +7,4 @@ export * as pokemon from "./commands/pokemon";
 export * as about from "./commands/about";
 export * as butterfree from "./commands/byebutterfree";
 export * as where from "./commands/where";
+export * as invite from "./commands/invite";
