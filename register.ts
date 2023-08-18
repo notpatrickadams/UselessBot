@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { client, logger } from "./src/constants";
-import { magicSeven, hi, rate, urbanDictionary, bee, pokemon, about, butterfree, where } from "./src/commands";
+import { magicSeven, hi, rate, urbanDictionary, bee, pokemon, about, butterfree, where, invite } from "./src/commands";
 
 dotenv.config({ path:"./.env" });
 
@@ -26,7 +26,8 @@ client.on("ready", async () => {
         pokemon.data,
         about.data,
         butterfree.data,
-        where.data
+        where.data,
+        invite.data
     ];
 
     commandDataArr.forEach(async (commandData) => {

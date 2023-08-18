@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import dotenv from "dotenv";
 import { client, logger } from "./constants";
-import { magicSeven, hi, rate, urbanDictionary, bee, pokemon, about, butterfree, where } from "./commands";
+import { magicSeven, hi, rate, urbanDictionary, bee, pokemon, about, butterfree, where, invite } from "./commands";
 
 dotenv.config({ path:"./.env" });
 
@@ -61,6 +61,9 @@ function ready(client: Client): void {
             break;
         case "where":
             where.execute(interaction);
+            break;
+        case "invite":
+            invite.execute(interaction);
             break;
         }
     });
