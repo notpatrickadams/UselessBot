@@ -1,6 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder, EmbedBuilder } from "discord.js";
 
-export const data = new SlashCommandBuilder()
+export const CommandData = new SlashCommandBuilder()
     .setName("magic7")
     .setDescription("Ask the Magic 7 Ball a question!")
     .addStringOption(option => 
@@ -10,7 +10,7 @@ export const data = new SlashCommandBuilder()
             .setRequired(true)
     );
 
-export const execute = async (interaction: CommandInteraction) => {
+export const CommandExecution = async (interaction: CommandInteraction) => {
     const inquiry = interaction.options.get("inquiry")?.value?.toString();
     
     const possibleEmbeds: Array<EmbedBuilder> = [

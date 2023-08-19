@@ -1,7 +1,7 @@
 import { Colors, CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { client, logger, userIdExp } from "../constants";
 
-export const data = new SlashCommandBuilder()
+export const CommandData = new SlashCommandBuilder()
     .setName("rate")
     .setDescription("The bot will randomly rate whatever you ask it to")
     .addStringOption(option => 
@@ -11,7 +11,7 @@ export const data = new SlashCommandBuilder()
             .setRequired(true)
     );
 
-export const execute = async (interaction: CommandInteraction) => {
+export const CommandExecution = async (interaction: CommandInteraction) => {
     const stars: Array<string> = [
         "⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐",
         "🌟", "🌟🌟", "🌟🌟🌟", "🌟🌟🌟🌟", "🌟🌟🌟🌟🌟",

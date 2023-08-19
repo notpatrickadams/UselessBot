@@ -5,7 +5,7 @@ import { capitalizeFirstLetter, logger } from "../constants";
 
 const chance = new Chance();
 
-export const data = new SlashCommandBuilder()
+export const CommandData = new SlashCommandBuilder()
     .setName("pokemon")
     .setDescription("Gives you a random Pokemon");
 
@@ -67,7 +67,7 @@ async function getPokemonEmbed() {
     throw new Error("random Pokemon is undefined");
 }
 
-export const execute = async (interaction: CommandInteraction) => {
+export const CommandExecution = async (interaction: CommandInteraction) => {
     try {
         const embed = (await getPokemonEmbed()).toJSON();
         await interaction.reply({ embeds: [embed] });

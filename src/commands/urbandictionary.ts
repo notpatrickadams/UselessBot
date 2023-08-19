@@ -1,6 +1,6 @@
 import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 
-export const data = new SlashCommandBuilder()
+export const CommandData = new SlashCommandBuilder()
     .setName("ud")
     .setDescription("The bot gets the Urban Dictionary definition of the term supplied")
     .addStringOption(option => 
@@ -10,7 +10,7 @@ export const data = new SlashCommandBuilder()
             .setRequired(true)
     );
 
-export const execute = async (interaction: CommandInteraction) => {
+export const CommandExecution = async (interaction: CommandInteraction) => {
     const term = interaction.options.get("term")?.value?.toString();
     const res = await fetch(`https://api.urbandictionary.com/v0/define?term=${ term }`);
     if (res.ok) {
