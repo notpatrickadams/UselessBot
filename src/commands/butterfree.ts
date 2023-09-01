@@ -10,11 +10,11 @@ function chooseRandomGif() {
     return gifChoices[Math.floor(Math.random() * gifChoices.length)];
 }
 
-export const data = new SlashCommandBuilder()
+export const CommandData = new SlashCommandBuilder()
     .setName("butterfree")
     .setDescription("Say goodbye to Butterfree");
 
-export const execute = async (interaction: CommandInteraction) => {
+export const CommandExecution = async (interaction: CommandInteraction) => {
     const randomGif = chooseRandomGif();
     const butterfreeEmbed = new EmbedBuilder()
         .setTitle("Bye Bye Butterfree")

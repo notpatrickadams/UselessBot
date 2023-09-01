@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import dotenv from "dotenv";
 import { client, logger } from "./constants";
-import { magicSeven, hi, rate, urbanDictionary, bee, pokemon, about, butterfree, where, invite } from "./commands";
+import { importCommands } from "./Commandler";
 
 dotenv.config({ path:"./.env" });
 
@@ -14,10 +14,16 @@ if (TOKEN === undefined) {
     process.exit(0);
 }
 
-function ready(client: Client): void {
+async function ready(client: Client): Promise<void> {
+    const commandMap = await importCommands();
     client.on("ready", async (client) => {
         const guildList = client.guilds.cache.map(guild => guild.id);
         logger.info(client.user.username + " is running in these Guilds: " + guildList.join(", "));
+        
+        logger.info("Loading commands from src/commands");
+        commandMap.forEach((cmd) => {
+            logger.debug(`/${ cmd.CommandData.name } loaded`);
+        });
     });
 
     client.on("interactionCreate", async (interaction) => {
@@ -34,37 +40,10 @@ function ready(client: Client): void {
         }    
         
         logger.info(`${ user.username }${user.discriminator === "0" ? "" : "#" + user.discriminator } (${ user.id }) invoked /${ commandName } in Guild: ${ serverId }`);
-        switch (commandName) {
-        case "magic7":
-            magicSeven.execute(interaction);
-            break;
-        case "hi":
-            hi.execute(interaction);
-            break;
-        case "rate":
-            rate.execute(interaction);
-            break;
-        case "ud":
-            urbanDictionary.execute(interaction);
-            break;
-        case "bee":
-            bee.execute(interaction);
-            break;
-        case "pokemon":
-            pokemon.execute(interaction);
-            break;
-        case "about":
-            about.execute(interaction);
-            break;
-        case "butterfree":
-            butterfree.execute(interaction);
-            break;
-        case "where":
-            where.execute(interaction);
-            break;
-        case "invite":
-            invite.execute(interaction);
-            break;
+        
+        const usedCommand = commandMap.get(commandName);
+        if (usedCommand !== undefined) {
+            usedCommand.CommandExecution(interaction);
         }
     });
 

@@ -1,11 +1,11 @@
 import { CommandInteraction, EmbedBuilder, SlashCommandBuilder, OAuth2Scopes } from "discord.js";
 import { client } from "../constants";
 
-export const data = new SlashCommandBuilder()
+export const CommandData = new SlashCommandBuilder()
     .setName("invite")
     .setDescription("Want to invite UselessBot to your server?");
 
-export const execute = async (interaction: CommandInteraction) => {
+export const CommandExecution = async (interaction: CommandInteraction) => {
     if (client.application) {
         const scope = [
             OAuth2Scopes.Bot,

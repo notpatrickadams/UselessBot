@@ -1,7 +1,7 @@
 import { AttachmentBuilder, CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import Jimp from "jimp";
 
-export const data = new SlashCommandBuilder()
+export const CommandData = new SlashCommandBuilder()
     .setName("bee")
     .setDescription("Creates a randomly colored bee");
 
@@ -14,7 +14,7 @@ function randomRGBA() {
     );
 }
 
-export const execute = async (interaction: CommandInteraction) => {
+export const CommandExecution = async (interaction: CommandInteraction) => {
     const rand1 = randomRGBA();
     const rand2 = randomRGBA();
     const rand3 = randomRGBA();

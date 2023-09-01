@@ -1,7 +1,7 @@
 import { AttachmentBuilder, CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import Jimp from "jimp";
 
-export const data = new SlashCommandBuilder()
+export const CommandData = new SlashCommandBuilder()
     .setName("where")
     .setDescription("Where?")
     .addStringOption(option => 
@@ -11,7 +11,7 @@ export const data = new SlashCommandBuilder()
             .setRequired(true)
     );
 
-export const execute = async (interaction: CommandInteraction) => {
+export const CommandExecution = async (interaction: CommandInteraction) => {
     const thing = interaction.options.get("thing")?.value?.toString();
     Jimp.read("src/images/banana.jpg", (err, where) => {
         if (err) throw err;
