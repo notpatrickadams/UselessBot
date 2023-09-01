@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { client, logger } from "./src/constants";
-import { magicSeven, hi, rate, urbanDictionary, bee, pokemon, about, butterfree, where, invite } from "./src/commands";
+import { ImportedCommand, importCommands } from "./src/Commandler";
 
 dotenv.config({ path:"./.env" });
 
@@ -12,28 +12,44 @@ if (TOKEN === undefined) {
     logger.info("You have not set the DISCORD_TOKEN environment variable");
     process.exit(0);
 }
-
 client.on("ready", async () => {
+    logger.info("Ready");
     if (!client.user || !client.application) {
         return;
     }
-    const commandDataArr = [
-        magicSeven.data,
-        hi.data,
-        rate.data,
-        urbanDictionary.data,
-        bee.data,
-        pokemon.data,
-        about.data,
-        butterfree.data,
-        where.data,
-        invite.data
-    ];
+    const commandMap = await importCommands();
+    
+    const registeredCommands = await client.application.commands.fetch();
+    for (const command of registeredCommands.values()) {
+        if (!commandMap.has(command.name)) {
+            const deleted = await command.delete();
+            logger.info(`Deleted slash command: /${ deleted.name }`);
+        } else {
+            logger.info(`Slash command /${ command.name } is already registered`);
+            commandMap.delete(command.name);
+        }
+    }
+    logger.debug(`Registered Commands: ${ registeredCommands.size }`);
 
-    commandDataArr.forEach(async (commandData) => {
-        await client.application?.commands.create(commandData);
-        logger.info(`Creating slash command: /${ commandData.name }`);
-        if (commandData === commandDataArr[commandDataArr.length - 1]) {
+    if (commandMap.size === 0) {
+        logger.info("No commands to register... Shutting down.");
+        process.exit(0);
+    }
+    
+    commandMap.forEach(async (command: ImportedCommand, commandName: string) => {
+        if (client.application === null) {
+            logger.info("Application is null for some reason...");
+            return;
+        }
+
+        if (registeredCommands.has(commandName)) {
+            logger.info(`Slash command /${ commandName } is already registered`);
+        }
+
+        await client.application.commands.create(command.CommandData);
+        commandMap.delete(commandName);
+        logger.info(`Creating slash command: /${ commandName }`);
+        if (commandMap.size === 0) {
             logger.info("Last command was resgistered... Shutting down.");
             process.exit(0);
         }

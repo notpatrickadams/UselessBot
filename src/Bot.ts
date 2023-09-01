@@ -1,13 +1,7 @@
-import { Client, CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { Client } from "discord.js";
 import dotenv from "dotenv";
 import { client, logger } from "./constants";
-import * as fs from "fs";
-import * as path from "path";
-
-type ImportedCommand = {
-    CommandData: SlashCommandBuilder,
-    CommandExecution: (interaction: CommandInteraction) => Promise<void>
-}
+import { importCommands } from "./Commandler";
 
 dotenv.config({ path:"./.env" });
 
@@ -20,21 +14,15 @@ if (TOKEN === undefined) {
     process.exit(0);
 }
 
-const commandsDirectory = path.join(__dirname, "commands");
-const commandMap = new Map<string, ImportedCommand>();
-
-function ready(client: Client): void {
+async function ready(client: Client): Promise<void> {
+    const commandMap = await importCommands();
     client.on("ready", async (client) => {
         const guildList = client.guilds.cache.map(guild => guild.id);
         logger.info(client.user.username + " is running in these Guilds: " + guildList.join(", "));
         
-        logger.info("Loading commands from src/commands:");
-        fs.readdirSync(commandsDirectory).forEach(async (file) => {
-            if (file.endsWith(".ts") || file.endsWith(".js")) {
-                const importStr = "./commands/" + file.slice(0, -3);
-                commandMap.set(file.slice(0, -3), await import(importStr) as ImportedCommand);
-                logger.info(" - " + file.slice(0, -3));
-            }
+        logger.info("Loading commands from src/commands");
+        commandMap.forEach((cmd) => {
+            logger.debug(`/${ cmd.CommandData.name } loaded`);
         });
     });
 

@@ -1,7 +1,7 @@
 import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 
 export const CommandData = new SlashCommandBuilder()
-    .setName("ud")
+    .setName("urbandictionary")
     .setDescription("The bot gets the Urban Dictionary definition of the term supplied")
     .addStringOption(option => 
         option
