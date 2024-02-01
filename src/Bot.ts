@@ -76,7 +76,7 @@ async function ready(client: Client): Promise<void> {
             }
         }
         const allReactions = reaction.message.reactions.cache
-        if (allReactions.hasAll("🪱", "🧠")) {
+        if (allReactions.hasAll("🪱", "🧠") && (reaction.emoji.name == "🧠" || reaction.emoji.name == "🪱")) {
             const currentGuild = reaction.message.guild;
             if (currentGuild) {
                 rossUsers.forEach(async (rossUser) => {
@@ -84,6 +84,7 @@ async function ready(client: Client): Promise<void> {
                         content: "Worms in the brain",
                         embeds: [rossEmbed]
                     });
+                    logger.info(`Sent Bob Ross to ${ rossUser }`)
                 });
                 
             }
