@@ -1,7 +1,8 @@
-import { Client } from "discord.js";
+import { Channel, Client, EmbedBuilder, Events, MessagePayload, TextChannel, User } from "discord.js";
 import dotenv from "dotenv";
-import { client, logger } from "./constants";
+import { client, logger, rossEmbed } from "./constants";
 import { importCommands } from "./Commandler";
+import users from "../config/ross.json";
 
 dotenv.config({ path:"./.env" });
 
@@ -60,6 +61,31 @@ async function ready(client: Client): Promise<void> {
             if (message.content.toLowerCase().includes("bread")) {
                 logger.info(`Bread Reacted to a message from ${ message.author.username } in ${ message.guildId }`);
                 message.react("🍞");
+            }
+        }
+    });
+
+    client.on("messageReactionAdd", async (reaction) => {
+        const rossUsers = (users.users as string[]);
+        if (reaction.partial) {
+            try {
+                await reaction.fetch();
+            } catch (err) {
+                logger.error(err);
+                return;
+            }
+        }
+        const allReactions = reaction.message.reactions.cache
+        if (allReactions.hasAll("🪱", "🧠")) {
+            const currentGuild = reaction.message.guild;
+            if (currentGuild) {
+                rossUsers.forEach(async (rossUser) => {
+                    (await currentGuild.members.fetch(rossUser)).send({
+                        content: "Worms in the brain",
+                        embeds: [rossEmbed]
+                    });
+                });
+                
             }
         }
     });
