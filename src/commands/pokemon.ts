@@ -34,7 +34,7 @@ async function getPokemonEmbed() {
         let pokemonName = capitalizeFirstLetter(randomPokemon.name);
         const pokemonImage = chance.weighted([randomPokemon.sprites.front_default, randomPokemon.sprites.front_shiny], [19/20, 1/20]);
         const pokemonSpecies = api.getPokemonSpeciesByName(randomPokemon.species.name);
-        let engText = null;
+        let engText: string = "";
         const types: string[] = [];
 
         randomPokemon.types.forEach((pkmnType) => {
