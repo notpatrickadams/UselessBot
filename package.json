@@ -7,7 +7,7 @@
     "dotenv": "^16.0.3",
     "jimp": "^0.22.7",
     "nodemon": "^2.0.22",
-    "pokenode-ts": "^1.18.3",
+    "pokenode-ts": "^1.20.0",
     "rotating-file-stream": "^3.1.0",
     "sharp": "^0.32.0",
     "tslog": "^4.8.2"
@@ -27,6 +27,6 @@
   "scripts": {
     "start": "ts-node src/Bot.ts",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/Bot.ts",
-    "register": "ts-node ./register.ts"
+    "register": "ts-node src/Register.ts"
   }
 }

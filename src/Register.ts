@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import { client, logger } from "./src/constants";
-import { ImportedCommand, importCommands } from "./src/Commandler";
+import { client, logger } from "./constants";
+import { ImportedCommand, importCommands } from "./Commandler";
 
 dotenv.config({ path:"./.env" });
 
@@ -38,7 +38,7 @@ client.on("ready", async () => {
     
     commandMap.forEach(async (command: ImportedCommand, commandName: string) => {
         if (client.application === null) {
-            logger.info("Application is null for some reason...");
+            logger.fatal("Application is null for some reason at this point.");
             return;
         }
 
