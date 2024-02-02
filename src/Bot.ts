@@ -66,7 +66,6 @@ async function ready(client: Client): Promise<void> {
     });
 
     client.on("messageReactionAdd", async (reaction) => {
-        const rossUsers = (users.users as string[]);
         if (reaction.partial) {
             try {
                 await reaction.fetch();
@@ -77,14 +76,18 @@ async function ready(client: Client): Promise<void> {
         }
         const allReactions = reaction.message.reactions.cache
         if (allReactions.hasAll("🪱", "🧠") && (reaction.emoji.name == "🧠" || reaction.emoji.name == "🪱")) {
+            const rossUsers = (users.users as string[]);
             const currentGuild = reaction.message.guild;
             if (currentGuild) {
-                rossUsers.forEach(async (rossUser) => {
-                    (await currentGuild.members.fetch(rossUser)).send({
-                        content: "Worms in the brain",
-                        embeds: [rossEmbed]
-                    });
-                    logger.info(`Sent Bob Ross to ${ rossUser }`)
+                rossUsers.forEach((rossUser) => {
+                    const resolvedUser = currentGuild.members.resolve(rossUser);
+                    if (resolvedUser) {
+                        resolvedUser.send({
+                            content: "Worms in the brain",
+                            embeds: [rossEmbed]
+                        });
+                        logger.info(`Sent Bob Ross to ${ rossUser }`)
+                    }
                 });
                 
             }
