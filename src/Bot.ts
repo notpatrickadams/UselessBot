@@ -1,4 +1,4 @@
-import { Channel, Client, EmbedBuilder, Events, MessagePayload, TextChannel, User } from "discord.js";
+import { Client } from "discord.js";
 import dotenv from "dotenv";
 import { client, logger, rossEmbed } from "./constants";
 import { importCommands } from "./Commandler";
@@ -74,7 +74,7 @@ async function ready(client: Client): Promise<void> {
                 return;
             }
         }
-        const allReactions = reaction.message.reactions.cache
+        const allReactions = reaction.message.reactions.cache;
         if (allReactions.hasAll("🪱", "🧠") && (reaction.emoji.name == "🧠" || reaction.emoji.name == "🪱")) {
             const rossUsers = (users.users as string[]);
             const currentGuild = reaction.message.guild;
@@ -86,7 +86,7 @@ async function ready(client: Client): Promise<void> {
                             content: "Worms in the brain",
                             embeds: [rossEmbed]
                         });
-                        logger.info(`Sent Bob Ross to ${ rossUser }`)
+                        logger.info(`Sent Bob Ross to ${ rossUser }`);
                     }
                 });
                 
